@@ -13,10 +13,15 @@ void Mahmoud_Nader()
 {
     ll N , Q;
     cin >> N >> Q;
-    map<ll , ll> R;
-    map<ll , ll> C;
-    ordered_set row;
-    ordered_set col;
+    vector<ll> rowCount(N+1), colCount(N+1);
+    set<ll> freeRows, freeCols;
+
+    for (int i = 1; i <= N; i++)
+    {
+        freeRows.insert(i);
+        freeCols.insert(i);
+    }
+    
     while(Q--)
     {
         int ty;
@@ -25,32 +30,41 @@ void Mahmoud_Nader()
         {
             ll x ,y;
             cin >> x >> y;
-            row.insert(x);
-            col.insert(y);
-            R[x]++;
-            C[y]++;
+            rowCount[x]++;
+            colCount[y]++;
+
+            if(rowCount[x] == 1)
+                freeRows.erase(x);
+            if(colCount[y] == 1)
+                freeCols.erase(y);
+            
         }
         else if(ty==2)
         {
             ll x ,y;
             cin >> x >> y;
-            R[x]--;
-            C[y]--;
-            if(R[x] == 0)row.erase(x);
-            if(C[y] == 0)col.erase(y);
+            rowCount[x]--;
+            colCount[y]--;
+
+            if(rowCount[x] == 0)
+                freeRows.insert(x);
+            if(colCount[y] == 0)
+                freeCols.insert(y);
         }
         else
         {
             ll l1 , l2 , r1 , r2;
             cin >> l1 >> r1 >> l2 >> r2;
-            l2++,r2++;
-            // instead of a loop !!
-            ll X = (row.order_of_key(l2))-(row.order_of_key(l1));
-            ll Y = (col.order_of_key(r2))-(col.order_of_key(r1));
-            if(X == (l2-l1) || Y == (r2-r1))
-            cout << "Yes\n" ;
+            auto itrow = freeRows.lower_bound(l1);
+            auto itcol = freeCols.lower_bound(r1);
+            bool ch1 = false , ch2 = false;
+            if(itrow != freeRows.end() && *itrow <= l2) ch1 = true;
+            if(itcol != freeCols.end() && *itcol <= r2) ch2 =true;
+            if(ch1 && ch2)
+                cout << "No\n";
             else
-            cout << "No\n";
+                cout << "Yes\n";
+           
         }
     }
 }

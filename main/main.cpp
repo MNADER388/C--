@@ -9,7 +9,7 @@ void custom_hash (std:: string& password)
     uint64_t FIRST_XOR = 4762;
     uint64_t SECOND_XOR = 763;
     uint64_t MOD = 1e15;
-    const int length = password.size();
+    const long long length = password.size();
 
     // Validate password length
     if (length < 8 || length > 40) {
@@ -24,7 +24,7 @@ void custom_hash (std:: string& password)
         uint64_t cur_char = password[i];
 
         // do the math!!
-        cur_char = ((((((cur_char+23)^FIRST_XOR)%MOD)*(i+1))^SECOND_XOR)%MOD);
+        cur_char = ((((((cur_char+43)^FIRST_XOR)%MOD)*(i+1))^SECOND_XOR)%MOD);
 
         // add it to the result
         result += cur_char;
@@ -57,12 +57,27 @@ void custom_hash (std:: string& password)
 }
 void Mahmoud_Nader()
 {
-    set <ll> S;
-    for(int i= 1 ; i <= 22000 ;i++)
-    {
-        S.insert(i^48);
-    }
-    cout << S.size();
+    // set <ll> S;
+    // for(int i= 1 ; i <= 22000 ;i++)
+    // {
+    //     S.insert(i^48);
+    // }
+    // cout << S.size();
+
+    // string S1 , S2 , S3 , S4;
+    // S1 = "M.Nader@911#";
+    // S2 = "M.Nader@911#";
+    // S3 = "MNader@911#";
+    // S4 = "M.nader@911#";
+    // custom_hash(S1);
+    // custom_hash(S2);
+    // custom_hash(S3);
+    // custom_hash(S4);
+    // cout << S1 << "\n";
+    // cout << S2 << "\n";
+    // cout << S3 << "\n";
+    // cout << S4 << "\n";
+    
 }
 
 int main()

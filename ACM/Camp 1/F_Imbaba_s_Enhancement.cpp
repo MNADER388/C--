@@ -6,12 +6,10 @@ using namespace std;
 //..........................................SMTYON...............................................................................................................
 void Mahmoud_Nader()
 {
-    int n;
+    ll n;
     cin >> n;
-    vector<long long> x(n);
-    for (int i = 0; i < n; ++i) {
-        cin >> x[i];
-    }
+    vector<ll> x(n);
+    for (int i = 0; i < n; ++i) cin >> x[i];
     if(n < 4)
     {
         cout <<"0\n";
@@ -26,36 +24,35 @@ void Mahmoud_Nader()
         return;
     }
     sort(x.begin(), x.end());
-    long double min_d = 1e18;
-    long double l = 0 , r=2e9;
-    for(int i = 0 ; i<50 ; i++)
+    long double l = 0 , r=2e10 , Ans , FSTA[3]{};
+    for(int i =0 ; i < 100 ; i++)
     {
-        long double m = l+(r-l)/2.0;
-        if(good(x ,m))
+        long double m = l + (r-l)/2 , cursta[3] , cover = -1;
+        ll cnt = 0;
+
+        for(int i = 0 ; i < n ;i++)
         {
-            r = m;
-            min_d = min(min_d , m);
-        }
-        else
-        l=m;
-    }
-    vector<double> stations(3);
-    int pos = 0;
-    for (int s = 0; s < 3; ++s) {
-        if(pos < n)
-        {
-            stations[s] = x[pos] + min_d;
-            while (pos < n && x[pos] <= stations[s] + min_d) {
-                pos++;
+            if(x[i] > cover)
+            {
+                cover = x[i] + (2*m);
+                cursta[cnt] = x[i]+m;
+                cnt++;
+                if(cnt > 3)
+                    break;
             }
         }
+        if(cnt > 3) l = m;
         else
         {
-            stations[s] = x[n-1];
+            r=m;
+            Ans = m;
+            for(int i =0 ; i < 3 ; i++) FSTA[i] = cursta[i];
         }
+
     }
-    cout << fixed << setprecision(6) << min_d << endl;
-    cout << fixed << setprecision(6) << stations[0] << " " << stations[1] << " " << stations[2] << endl;
+    cout << fixed << setprecision(7) << Ans << '\n';
+
+    for (int i = 0; i < 3; i++) cout << fixed << setprecision(7) << FSTA[i] << ' ';
 
 }
 
